@@ -1,0 +1,20 @@
+name: "mirror"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["**"]
+    tags: ["**"]
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: wearerequired/git-mirror-action@v1
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.CODEBERG_KEY }}
+        with:
+          source-repo: "git@github.com:rktr1998/zig-eui.git"
+          destination-repo: "ssh://git@codeberg.org/rktr1998/zig-eui.git"   
